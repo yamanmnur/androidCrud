@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".aktivitasbaru">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/jv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Java"/>
+
+        <CheckBox
+            android:id="@+id/ph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PHP"/>
+
+        <Button
+            android:id="@+id/tombol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hasil"
+            android:onClick="klikHasil"/>
+        <TextView
+            android:id="@+id/lihat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="dipilih"/>
+
+        <RadioGroup
+            android:id="@+id/jenisKelamin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/pria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="laki laki" />
+
+            <RadioButton
+                android:id="@+id/wanita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Perempuan" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="buka Toast"
+            android:onClick="bukaToast"
+            />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hasil radioButton"
+            android:onClick="klikHasilRadio"
+            />
+
+        <TextView
+            android:id="@+id/hasilRadio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hasil pilih" />
+
+        <ListView
+            android:id="@+id/listAngka"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

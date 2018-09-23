@@ -3,11 +3,12 @@ package id.co.github.yamanmnur.belajarcrud;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
-import com.android.volley.toolbox.Volley;
+//import com.android.volley.toolbox.Volley;
 
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
+/*
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,13 +17,13 @@ import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+*/
 public class MainActivity extends AppCompatActivity {
     private  static  final String TAG = MainActivity.class.getName();
     private Button btnRequest;
 
-    private  RequestQueue mRequestQueue;
-    private  StringRequest mStringRequest;
+   // private  RequestQueue mRequestQueue;
+   // private  StringRequest mStringRequest;
 
     private String url = "http://www.mocky.io/v2/5b9fb5633000004a007b1317";
 
@@ -32,10 +33,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btnRequest = (Button) findViewById(R.id.buttonRequest);
 
+
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendAndRequestResponse();
+               // sendAndRequestResponse();
             }
         });
 
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendAndRequestResponse(){
         // inisialisasi requestQueue
-        mRequestQueue = Volley.newRequestQueue(this);
+     /*   mRequestQueue = Volley.newRequestQueue(this);
 
 
         mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mRequestQueue.add(mStringRequest);
+    */
     }
 
 }

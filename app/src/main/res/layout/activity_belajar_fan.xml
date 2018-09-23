@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".belajarFan">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="masukan nama"
+            android:id="@+id/nama_pegawai"
+            android:inputType="text"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="masukan posisi anda sekarang"
+            android:id="@+id/posisi_karyawan"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gajih_karyawan"
+            android:hint="masukan gajih anda"
+            android:inputType="number"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="masukan text sekarang "
+            android:layout_weight="1"
+            android:onClick="masukanData"
+            android:id="@+id/masukanData"
+            />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/readAllData"
+                android:scrollbars="vertical"
+
+                ></android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/namaList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="87dp"
+        tools:layout_editor_absoluteY="423dp" />
+</android.support.constraint.ConstraintLayout>
