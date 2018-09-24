@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListPegawaiAdapter extends RecyclerView.Adapter<ListPegawaiAdapter.ViewHolder> {
 
-    private List<DataPegawai> dataPegawai;
-    public ListPegawaiAdapter(List<DataPegawai> dataPegawai){
+    private ArrayList<DataPegawai> dataPegawai;
+    public ListPegawaiAdapter(ArrayList<DataPegawai> dataPegawai){
         this.dataPegawai = dataPegawai;
 
     }

@@ -34,46 +34,10 @@ public class belajarFan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_belajar_fan);
-        recyclerView = (RecyclerView) findViewById(R.id.readAllData);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        dataPegawai = new ArrayList<>();
-
 
         AndroidNetworking.initialize(getApplicationContext());
-        getData();
 
-    }
-    public void getData(){
-        AndroidNetworking.get("http://10.42.0.1:8000/androidCrudApi/read.php")
-                .setPriority(Priority.LOW)
-                .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try{
 
-                            for (int i = 0 ; i < response.length(); i++){
-                                JSONObject data = response.getJSONObject(i);
-                                dataPegawai.add(new DataPegawai(
-                                        data.getInt("id_pegawai"),
-                                        data.getString("nama_pegawai"),
-                                        data.getString("posisi_pegawai"),
-                                        data.getInt("gajih_pegawai")
-                                ));
-                            }
-                            ListPegawaiAdapter adapter = new ListPegawaiAdapter( dataPegawai );
-                            recyclerView.setAdapter(adapter);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-
-                    }
-                });
     }
 
     public void masukanData(View v){

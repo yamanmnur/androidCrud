@@ -8,4 +8,12 @@
     tools:context=".BacaData"
     tools:showIn="@layout/activity_baca_data">
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/readAllData"
+        android:scrollbars="vertical"
+
+        ></android.support.v7.widget.RecyclerView>
+
 </android.support.constraint.ConstraintLayout>

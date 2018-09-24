@@ -13,21 +13,21 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".Main2Activity" />
-        <activity android:name=".aktivitasbaru"></activity>
-        <activity android:name=".belajarFan">
-
+        <activity android:name=".aktivitasbaru" />
+        <activity android:name=".belajarFan"></activity>
+        <activity
+            android:name=".BacaData"
+            android:label="@string/title_activity_baca_data"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".ReadData">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".BacaData"
-            android:label="@string/title_activity_baca_data"
-            android:theme="@style/AppTheme.NoActionBar">
 
-        </activity>
     </application>
 
 </manifest>
