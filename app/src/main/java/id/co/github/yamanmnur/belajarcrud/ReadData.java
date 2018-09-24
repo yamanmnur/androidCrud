@@ -17,17 +17,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadData extends AppCompatActivity {
+    private ArrayList<DataPegawai> dataPegawais;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_data);
+        recyclerView = (RecyclerView) findViewById(R.id.readAllData);
 
-
+        dataPegawais = new ArrayList<>();
 
 
         AndroidNetworking.initialize(getApplicationContext());
         getData();
+        ListPegawaiAdapter adapter = new ListPegawaiAdapter( dataPegawais );
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
     public void getData(){
         AndroidNetworking.get("http://10.42.0.1:8000/androidCrudApi/read.php")
@@ -37,11 +44,8 @@ public class ReadData extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try{
-                            ArrayList<DataPegawai> dataPegawais;
-                            RecyclerView recyclerView;
 
-                            dataPegawais = new ArrayList<>();
-                            recyclerView = (RecyclerView) findViewById(R.id.readAllData);
+
                             for (int i = 0 ; i < response.length(); i++){
                                 JSONObject data = response.getJSONObject(i);
                                 dataPegawais.add(new DataPegawai(
@@ -52,11 +56,7 @@ public class ReadData extends AppCompatActivity {
                                 ));
                             }
 
-                            ListPegawaiAdapter adapter = new ListPegawaiAdapter( dataPegawais );
-                            recyclerView.setHasFixedSize(true);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                            recyclerView.setAdapter(adapter);
-
+                            //return dataPegawais;
                         }catch (Exception e){
                             e.printStackTrace();
                         }
