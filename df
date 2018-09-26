@@ -1,0 +1,263 @@
+[1mdiff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml[m
+[1mindex 18d8ee4..c89e63d 100644[m
+[1m--- a/app/src/main/AndroidManifest.xml[m
+[1m+++ b/app/src/main/AndroidManifest.xml[m
+[36m@@ -14,18 +14,21 @@[m
+         <activity android:name=".MainActivity" />[m
+         <activity android:name=".Main2Activity" />[m
+         <activity android:name=".aktivitasbaru" />[m
+[31m-        <activity android:name=".belajarFan"></activity>[m
+[32m+[m[32m        <activity android:name=".belajarFan">[m
+[32m+[m[32m            <intent-filter>[m
+[32m+[m[32m                <action android:name="android.intent.action.MAIN" />[m
+[32m+[m
+[32m+[m[32m                <category android:name="android.intent.category.LAUNCHER" />[m
+[32m+[m[32m            </intent-filter>[m
+[32m+[m[32m        </activity>[m
+         <activity[m
+             android:name=".BacaData"[m
+             android:label="@string/title_activity_baca_data"[m
+             android:theme="@style/AppTheme.NoActionBar">[m
+[32m+[m
+         </activity>[m
+         <activity android:name=".ReadData">[m
+[31m-            <intent-filter>[m
+[31m-                <action android:name="android.intent.action.MAIN" />[m
+ [m
+[31m-                <category android:name="android.intent.category.LAUNCHER" />[m
+[31m-            </intent-filter>[m
+         </activity>[m
+ [m
+     </application>[m
+[1mdiff --git a/app/src/main/java/id/co/github/yamanmnur/belajarcrud/belajarFan.java b/app/src/main/java/id/co/github/yamanmnur/belajarcrud/belajarFan.java[m
+[1mindex 23e2136..9bc06fe 100644[m
+[1m--- a/app/src/main/java/id/co/github/yamanmnur/belajarcrud/belajarFan.java[m
+[1m+++ b/app/src/main/java/id/co/github/yamanmnur/belajarcrud/belajarFan.java[m
+[36m@@ -1,6 +1,10 @@[m
+ package id.co.github.yamanmnur.belajarcrud;[m
+ [m
+ import android.app.ProgressDialog;[m
+[32m+[m[32mimport android.content.Intent;[m
+[32m+[m[32mimport android.os.AsyncTask;[m
+[32m+[m[32mimport android.os.Handler;[m
+[32m+[m[32mimport android.support.v4.widget.SwipeRefreshLayout;[m
+ import android.support.v7.app.AppCompatActivity;[m
+ import android.os.Bundle;[m
+ import android.support.v7.widget.LinearLayoutManager;[m
+[36m@@ -22,24 +26,93 @@[m [mimport org.w3c.dom.Text;[m
+ [m
+ import java.util.ArrayList;[m
+ import java.util.List;[m
+[32m+[m[32mimport java.util.concurrent.Executors;[m
+[32m+[m[32mimport java.util.concurrent.TimeUnit;[m
+[32m+[m
+[32m+[m[32mimport okhttp3.OkHttpClient;[m
+ [m
+ public class belajarFan extends AppCompatActivity {[m
+     private static final String TAG = "belajarFan";[m
+[31m-[m
+[31m-    private List<DataPegawai> dataPegawai;[m
+[32m+[m[32m    private ArrayList<DataPegawai> dataPegawais;[m
+     private RecyclerView recyclerView;[m
+ [m
+[31m-[m
+[32m+[m[32m    OkHttpClient okHttpClient = new OkHttpClient().newBuilder()[m
+[32m+[m[32m            .connectTimeout(120, TimeUnit.SECONDS)[m
+[32m+[m[32m            .readTimeout(120, TimeUnit.SECONDS)[m
+[32m+[m[32m            . writeTimeout(120, TimeUnit.SECONDS)[m
+[32m+[m[32m            .build();[m
+     @Override[m
+     protected void onCreate(Bundle savedInstanceState) {[m
+         super.onCreate(savedInstanceState);[m
+         setContentView(R.layout.activity_belajar_fan);[m
+[32m+[m[32m        recyclerView = (RecyclerView) findViewById(R.id.readAllData);[m
+[32m+[m
+[32m+[m[32m        dataPegawais = new ArrayList<>();[m
+[32m+[m
+[32m+[m
+[32m+[m[32m        final SwipeRefreshLayout swipeRefreshLayout  ;[m
+[32m+[m[32m        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshData);[m
+[32m+[m
+ [m
+[31m-        AndroidNetworking.initialize(getApplicationContext());[m
+[32m+[m[32m        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {[m
+[32m+[m[32m            @Override[m
+[32m+[m[32m            public void onRefresh() {[m
+ [m
+ [m
+[32m+[m[32m                new Handler().postDelayed(new Runnable() {[m
+[32m+[m[32m                    @Override[m
+[32m+[m[32m                    public void run() {[m
+[32m+[m[32m                        dataPegawais.clear();[m
+[32m+[m[32m                        getData();[m
+[32m+[m[32m                        swipeRefreshLayout.setRefreshing(false);[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                }, 2000);[m
+[32m+[m[32m                //Intent refres = new Intent(belajarFan.this, belajarFan.class);[m
+[32m+[m[32m                //startActivity(refres);[m
+[32m+[m[32m            }[m
+[32m+[m[32m        });[m
+[32m+[m[32m        AndroidNetworking.initialize(getApplicationContext(),okHttpClient);[m
+[32m+[m[32m        getData();[m
+[32m+[m[32m        ListPegawaiAdapter adapter = new ListPegawaiAdapter( dataPegawais );[m
+[32m+[m[32m        recyclerView.setAdapter(adapter);[m
+[32m+[m[32m        recyclerView.setHasFixedSize(true);[m
+[32m+[m[32m        recyclerView.setLayoutManager(new LinearLayoutManager(this));[m
+[32m+[m
+     }[m
+[32m+[m[32m    public void getData(){[m
+[32m+[m[32m        AndroidNetworking.get("http://10.42.0.1:8000/androidCrudApi/read.php")[m
+[32m+[m[32m                .setPriority(Priority.LOW)[m
+[32m+[m[32m                .getResponseOnlyFromNetwork()[m
+[32m+[m[32m                .setExecutor(Executors.newSingleThreadExecutor())[m
+[32m+[m[32m                .build()[m
+[32m+[m[32m                .getAsJSONArray(new JSONArrayRequestListener() {[m
+[32m+[m[32m                    @Override[m
+[32m+[m[32m                    public void onResponse(JSONArray response) {[m
+[32m+[m[32m                        try{[m
+[32m+[m
+ [m
+[32m+[m[32m                            for (int i = 0 ; i < response.length(); i++){[m
+[32m+[m[32m                                JSONObject data = response.getJSONObject(i);[m
+[32m+[m[32m                                dataPegawais.add(new DataPegawai([m
+[32m+[m[32m                                        data.getInt("id_pegawai"),[m
+[32m+[m[32m                                        data.getString("nama_pegawai"),[m
+[32m+[m[32m                                        data.getString("posisi_pegawai"),[m
+[32m+[m[32m                                        data.getInt("gajih_pegawai")[m
+[32m+[m[32m                                ));[m
+[32m+[m[32m                            }[m
+[32m+[m
+[32m+[m[32m                            //return dataPegawais;[m
+[32m+[m[32m                        }catch (Exception e){[m
+[32m+[m[32m                            e.printStackTrace();[m
+[32m+[m[32m                        }[m
+[32m+[m[32m                    }[m
+[32m+[m
+[32m+[m[32m                    @Override[m
+[32m+[m[32m                    public void onError(ANError anError) {[m
+[32m+[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                });[m
+[32m+[m[32m    }[m
+     public void masukanData(View v){[m
+         EditText nama = (EditText) findViewById(R.id.nama_pegawai);[m
+         EditText posisi = (EditText) findViewById(R.id.posisi_karyawan);[m
+[36m@@ -52,20 +125,31 @@[m [mpublic class belajarFan extends AppCompatActivity {[m
+                 .addBodyParameter("nama_pegawai",nama.getText().toString())[m
+                 .addBodyParameter("posisi_pegawai", posisi.getText().toString())[m
+                 .addBodyParameter("gajih_pegawai",gajih.getText().toString())[m
+[31m-                .setPriority(Priority.MEDIUM)[m
+[32m+[m[32m                .setPriority(Priority.HIGH)[m
+                 .build()[m
+                 .getAsJSONObject(new JSONObjectRequestListener() {[m
+                     @Override[m
+                     public void onResponse(JSONObject response) {[m
+                         progress.dismiss();[m
+[32m+[m[32m                        dataPegawais.clear();[m
+[32m+[m[32m                        getData();[m
+                         Toast.makeText(belajarFan.this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show();[m
+                     }[m
+ [m
+                     @Override[m
+                     public void onError(ANError anError) {[m
+[32m+[m[32m                        progress.dismiss();[m
+                         Toast.makeText(belajarFan.this, "Data gagal ditambahkan", Toast.LENGTH_SHORT).show();[m
+                     }[m
+                 });[m
+     }[m
+ [m
+[32m+[m[32m    public class AddItemToList extends AsyncTask<Void, String , Void>{[m
+[32m+[m
+[32m+[m[32m        @Override[m
+[32m+[m[32m        protected Void doInBackground(Void... voids) {[m
+[32m+[m[32m            return null;[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m
+ }[m
+[1mdiff --git a/app/src/main/res/layout/activity_belajar_fan.xml b/app/src/main/res/layout/activity_belajar_fan.xml[m
+[1mindex 8c98034..0864b5c 100644[m
+[1m--- a/app/src/main/res/layout/activity_belajar_fan.xml[m
+[1m+++ b/app/src/main/res/layout/activity_belajar_fan.xml[m
+[36m@@ -1,16 +1,20 @@[m
+ <?xml version="1.0" encoding="utf-8"?>[m
+[31m-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"[m
+[32m+[m[32m<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"[m
+     xmlns:app="http://schemas.android.com/apk/res-auto"[m
+     xmlns:tools="http://schemas.android.com/tools"[m
+     android:layout_width="match_parent"[m
+     android:layout_height="match_parent"[m
+[32m+[m
+     tools:context=".belajarFan">[m
+[31m-    <LinearLayout[m
+[31m-        android:layout_width="match_parent"[m
+[31m-        android:layout_height="wrap_content"[m
+[31m-        android:orientation="vertical"[m
+ [m
+[31m-        >[m
+[32m+[m
+[32m+[m[32m        <LinearLayout[m
+[32m+[m[32m    android:id="@+id/linearLayout"[m
+[32m+[m[32m    android:orientation="vertical"[m
+[32m+[m[32m    android:layout_width="match_parent"[m
+[32m+[m[32m    android:layout_height="wrap_content">[m
+[32m+[m
+[32m+[m
+         <EditText[m
+             android:layout_width="match_parent"[m
+             android:layout_height="wrap_content"[m
+[36m@@ -32,31 +36,32 @@[m
+             android:hint="masukan gajih anda"[m
+             android:inputType="number"[m
+             />[m
+[32m+[m
+         <Button[m
+[32m+[m[32m            android:id="@+id/masukanData"[m
+             android:layout_width="match_parent"[m
+[31m-            android:layout_height="wrap_content"[m
+[31m-            android:text="masukan text sekarang "[m
+[32m+[m[32m            android:layout_height="115dp"[m
+             android:layout_weight="1"[m
+             android:onClick="masukanData"[m
+[31m-            android:id="@+id/masukanData"[m
+[31m-            />[m
+[31m-[m
+[32m+[m[32m            android:text="masukan text sekarang "[m
+[32m+[m[32m            android:visibility="visible" />[m
+[32m+[m[32m</LinearLayout>[m
+ [m
+[31m-            <android.support.v7.widget.RecyclerView[m
+[31m-                android:layout_width="match_parent"[m
+[31m-                android:layout_height="wrap_content"[m
+[31m-                android:id="@+id/readAllData"[m
+[31m-                android:scrollbars="vertical"[m
+[32m+[m[32m        <android.support.v4.widget.SwipeRefreshLayout[m
+[32m+[m[32m            android:layout_width="match_parent"[m
+[32m+[m[32m            android:layout_height="wrap_content"[m
+[32m+[m[32m            android:id="@+id/refreshData"[m
+[32m+[m[32m            android:layout_below="@+id/linearLayout"[m
+ [m
+[31m-                ></android.support.v7.widget.RecyclerView>[m
+[32m+[m[32m            >[m
+[32m+[m[32m        <android.support.v7.widget.RecyclerView[m
+[32m+[m[32m            android:id="@+id/readAllData"[m
+[32m+[m[32m            android:layout_width="match_parent"[m
+[32m+[m[32m            android:layout_height="match_parent"[m
+[32m+[m[32m            android:layout_weight="1"[m
+ [m
+[31m-    </LinearLayout>[m
+[32m+[m[32m            android:scrollbars="vertical"[m
+ [m
+[31m-    <TextView[m
+[31m-        android:id="@+id/namaList"[m
+[31m-        android:layout_width="wrap_content"[m
+[31m-        android:layout_height="wrap_content"[m
+[31m-        android:text="TextView"[m
+[31m-        tools:layout_editor_absoluteX="87dp"[m
+[31m-        tools:layout_editor_absoluteY="423dp" />[m
+[31m-</android.support.constraint.ConstraintLayout>[m
+\ No newline at end of file[m
+[32m+[m[32m            ></android.support.v7.widget.RecyclerView>[m
+[32m+[m[32m        </android.support.v4.widget.SwipeRefreshLayout>[m
+[32m+[m[32m </RelativeLayout>[m
+\ No newline at end of file[m
