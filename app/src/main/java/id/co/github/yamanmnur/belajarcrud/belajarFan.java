@@ -58,17 +58,9 @@ public class belajarFan extends AppCompatActivity {
             @Override
             public void onRefresh() {
 
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dataPegawais.clear();
-                        getData();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 2000);
-                //Intent refres = new Intent(belajarFan.this, belajarFan.class);
-                //startActivity(refres);
+                dataPegawais.clear();
+                getData();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
         AndroidNetworking.initialize(getApplicationContext(),okHttpClient);
@@ -78,6 +70,10 @@ public class belajarFan extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+    }
+    public void cariData(){
+        Intent i = new Intent(this,SearchViewActivity.class);
+        startActivity(i);
     }
     public void getData(){
         AndroidNetworking.get("http://10.42.0.1:8000/androidCrudApi/read.php")

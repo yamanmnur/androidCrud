@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">belajarCrud</string>
     <string name="title_activity_baca_data">BacaData</string>
+    <string name="search_hint">BacaData</string>
+
 </resources>

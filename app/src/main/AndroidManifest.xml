@@ -15,22 +15,38 @@
         <activity android:name=".Main2Activity" />
         <activity android:name=".aktivitasbaru" />
         <activity android:name=".belajarFan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
+         <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+             <category android:name="android.intent.category.LAUNCHER" />
+         </intent-filter>
+
         </activity>
         <activity
             android:name=".BacaData"
             android:label="@string/title_activity_baca_data"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ReadData" />
+        <activity android:name=".alertDialog" />
+        <activity android:name=".searchViewActivity" />
+        <activity
+            android:name=".SearchViewActivity"
             android:theme="@style/AppTheme.NoActionBar">
+       <!--     <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.SEARCH" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />-->
         </activity>
-        <activity android:name=".ReadData">
-
-        </activity>
-
+        <activity android:name=".KuisPilihanGana"></activity>
     </application>
 
 </manifest>

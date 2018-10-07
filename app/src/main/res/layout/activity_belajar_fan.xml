@@ -36,11 +36,17 @@
             android:hint="masukan gajih anda"
             android:inputType="number"
             />
-
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:onClick="cariData"
+                android:text="Cari Data"
+                android:visibility="visible" />
         <Button
             android:id="@+id/masukanData"
             android:layout_width="match_parent"
-            android:layout_height="115dp"
+            android:layout_height="80dp"
             android:layout_weight="1"
             android:onClick="masukanData"
             android:text="masukan text sekarang "
